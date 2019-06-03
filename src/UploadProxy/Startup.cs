@@ -1,71 +1,129 @@
+#define HTTPS
+
+using System;
+using IdentityServer4.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace UploadProxy
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
+		public IConfiguration Configuration { get; }
+		public IHostingEnvironment Environment { get; }
+
+		public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
 		{
 			Configuration = configuration;
+			Environment = hostingEnvironment;
 		}
 
-		public IConfiguration Configuration { get; }
-
-		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddDbContext<UsersDbContext>();
+			services.AddIdentity<ApplicationUser, IdentityRole>()
+				.AddEntityFrameworkStores<UsersDbContext>()
+				.AddDefaultTokenProviders();
 
-			// In production, the Angular files will be served from this directory
+			services.AddIdentityServer()
+				.AddSigningCredential(new SigningCredentials(
+					new JsonWebKey(Configuration["IdentityJwk"]),
+					SecurityAlgorithms.RsaSha256Signature))
+				.AddInMemoryPersistedGrants()
+				.AddInMemoryIdentityResources(Config.GetIdentityResources())
+				.AddInMemoryApiResources(Config.GetApiResources())
+				.AddInMemoryClients(Config.GetClients(Configuration["ClientSecret"]))
+				.AddAspNetIdentity<ApplicationUser>();
+			services.AddTransient<IProfileService, IdentityClaimsProfileService>();
+
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+			services.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			})
+			.AddJwtBearer(options =>
+			{
+				options.Authority = Configuration["Authority"];
+				options.Audience = "uploadproxyapi";
+#if HTTPS
+				options.RequireHttpsMetadata = true;
+#else
+				options.RequireHttpsMetadata = false;
+#endif
+				options.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateAudience = true,
+					ValidateIssuer = true,
+					ValidateIssuerSigningKey = true,
+					ValidateLifetime = true,
+					ClockSkew = TimeSpan.Zero,
+				};
+			});
+
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("UploadProxyApiAccess", policy => policy.RequireClaim("UploadProxyApiAccess", "true"));
+			});
+
 			services.AddSpaStaticFiles(configuration =>
 			{
 				configuration.RootPath = "ClientApp/dist";
 			});
+
+			services.AddLogging(e =>
+			{
+				e.AddDebug();
+				e.AddAzureWebAppDiagnostics();
+			});
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+			ILoggerFactory loggerFactory, IAzureKicker azureKicker)
 		{
 			if (env.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
+				//app.UseDeveloperExceptionPage();
 			}
 			else
 			{
 				app.UseExceptionHandler("/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
 
+#if HTTPS
 			app.UseHttpsRedirection();
+#endif
 			app.UseStaticFiles();
 			app.UseSpaStaticFiles();
 
+			app.UseIdentityServer();
+			app.UseAuthentication();
 			app.UseMvc(routes =>
 			{
-				routes.MapRoute(
-					name: "default",
-					template: "{controller}/{action=Index}/{id?}");
+				routes.MapRoute("default", "{controller}/{action=Index}/{id?}");
 			});
 
 			app.UseSpa(spa =>
 			{
-				// To learn more about options for serving an Angular SPA from ASP.NET Core,
-				// see https://go.microsoft.com/fwlink/?linkid=864501
-
 				spa.Options.SourcePath = "ClientApp";
 
 				if (env.IsDevelopment())
 				{
-					spa.UseAngularCliServer(npmScript: "start");
+					spa.UseAngularCliServer("start");
 				}
 			});
+
+			azureKicker.Start();
 		}
 	}
 }
