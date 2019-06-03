@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadProxy", "UploadProxy\UploadProxy.csproj", "{4A1879A6-DBB8-4548-9087-FCCD58FDED15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UploadProxy", "UploadProxy\UploadProxy.csproj", "{4A1879A6-DBB8-4548-9087-FCCD58FDED15}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10 Presentation", "10 Presentation", "{1C476EC7-8CD1-4535-9D1D-36BA4511FC20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "20 Business", "20 Business", "{D18145B0-5250-4160-B629-813E1B6E99D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "30 Domain", "30 Domain", "{CBE106AF-6E6E-47BB-B25D-ACB2A99A24B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "40 Data", "40 Data", "{55990E4E-39EA-4A6A-B229-0EABB7D69516}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +26,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4A1879A6-DBB8-4548-9087-FCCD58FDED15} = {1C476EC7-8CD1-4535-9D1D-36BA4511FC20}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73CB2940-1ED4-4A87-B167-1B0E1AD46D5A}
