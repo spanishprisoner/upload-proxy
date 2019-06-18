@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UploadProxy", "UploadProxy\UploadProxy.csproj", "{4A1879A6-DBB8-4548-9087-FCCD58FDED15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UploadProxy.Front", "UploadProxy\UploadProxy.Front.csproj", "{4A1879A6-DBB8-4548-9087-FCCD58FDED15}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10 Presentation", "10 Presentation", "{1C476EC7-8CD1-4535-9D1D-36BA4511FC20}"
 EndProject
@@ -12,6 +12,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "30 Domain", "30 Domain", "{CBE106AF-6E6E-47BB-B25D-ACB2A99A24B8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "40 Data", "40 Data", "{55990E4E-39EA-4A6A-B229-0EABB7D69516}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UploadProxy.Core", "UploadProxy.Core\UploadProxy.Core.csproj", "{A51DCAEC-B3C4-4F8A-AADB-C67D3B08AB75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadProxy.Data.Identity", "UploadProxy.Data.Identity\UploadProxy.Data.Identity.csproj", "{5B5EEC1F-3FDD-4767-B256-752702390CD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadProxy.Data.Migrations", "UploadProxy.Data.Migrations\UploadProxy.Data.Migrations.csproj", "{29312551-B9B2-45C5-8659-036D862FB361}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +29,27 @@ Global
 		{4A1879A6-DBB8-4548-9087-FCCD58FDED15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A1879A6-DBB8-4548-9087-FCCD58FDED15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A1879A6-DBB8-4548-9087-FCCD58FDED15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A51DCAEC-B3C4-4F8A-AADB-C67D3B08AB75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A51DCAEC-B3C4-4F8A-AADB-C67D3B08AB75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A51DCAEC-B3C4-4F8A-AADB-C67D3B08AB75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A51DCAEC-B3C4-4F8A-AADB-C67D3B08AB75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B5EEC1F-3FDD-4767-B256-752702390CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5EEC1F-3FDD-4767-B256-752702390CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5EEC1F-3FDD-4767-B256-752702390CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5EEC1F-3FDD-4767-B256-752702390CD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29312551-B9B2-45C5-8659-036D862FB361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29312551-B9B2-45C5-8659-036D862FB361}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29312551-B9B2-45C5-8659-036D862FB361}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29312551-B9B2-45C5-8659-036D862FB361}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4A1879A6-DBB8-4548-9087-FCCD58FDED15} = {1C476EC7-8CD1-4535-9D1D-36BA4511FC20}
+		{A51DCAEC-B3C4-4F8A-AADB-C67D3B08AB75} = {D18145B0-5250-4160-B629-813E1B6E99D4}
+		{5B5EEC1F-3FDD-4767-B256-752702390CD5} = {55990E4E-39EA-4A6A-B229-0EABB7D69516}
+		{29312551-B9B2-45C5-8659-036D862FB361} = {55990E4E-39EA-4A6A-B229-0EABB7D69516}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73CB2940-1ED4-4A87-B167-1B0E1AD46D5A}

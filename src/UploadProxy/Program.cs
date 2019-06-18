@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace UploadProxy
+namespace UploadProxy.Front
 {
 	public class Program
 	{

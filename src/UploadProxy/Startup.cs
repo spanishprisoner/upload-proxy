@@ -1,8 +1,8 @@
 #define HTTPS
 
 using System;
-using IdentityServer4.Services;
 using IdentityServer4.EntityFramework.Stores;
+using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -15,8 +15,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using UploadProxy.Core.Services;
+using UploadProxy.Data.Identity;
+using UploadProxy.Data.Identity.Models;
 
-namespace UploadProxy
+namespace UploadProxy.Front
 {
 	public class Startup
 	{
@@ -32,7 +35,7 @@ namespace UploadProxy
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<UsersDbContext>();
-			services.AddIdentity<ApplicationUser, IdentityRole>()
+			services.AddIdentity<IdentityUser, IdentityRole>()
 				.AddEntityFrameworkStores<UsersDbContext>()
 				.AddDefaultTokenProviders();
 
@@ -46,7 +49,7 @@ namespace UploadProxy
 				.AddInMemoryIdentityResources(Config.GetIdentityResources())
 				.AddInMemoryApiResources(Config.GetApiResources())
 				.AddInMemoryClients(Config.GetClients(Configuration["ClientSecret"]))
-				.AddAspNetIdentity<ApplicationUser>();
+				.AddAspNetIdentity<IdentityUser>();
 			services.AddTransient<IProfileService, IdentityClaimsProfileService>();
 			services.AddTransient<IPersistedGrantStore, PersistedGrantStore>();
 
