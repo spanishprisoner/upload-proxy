@@ -16,8 +16,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using UploadProxy.Core.Services;
+using UploadProxy.Core.Services.Implementation;
 using UploadProxy.Data.Identity;
 using UploadProxy.Data.Identity.Models;
+using UploadProxy.Front.Services;
+using UploadProxy.Front.Services.Implementation;
 
 namespace UploadProxy.Front
 {
@@ -34,6 +37,11 @@ namespace UploadProxy.Front
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddSingleton<IHttpClientService, HttpClientService>();
+			services.AddSingleton<IAzureKicker, AzureKicker>();
+			services.AddSingleton<IWebClientService, WebClientService>();
+			services.AddTransient<IEmailSender, EmailSender>();
+
 			services.AddDbContext<UsersDbContext>();
 			services.AddIdentity<IdentityUser, IdentityRole>()
 				.AddEntityFrameworkStores<UsersDbContext>()
