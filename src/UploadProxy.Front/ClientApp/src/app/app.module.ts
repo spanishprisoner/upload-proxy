@@ -1,18 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
+import { JQUERY_PROVIDER } from './shared/jquery.service';
 import { AppComponent } from './app.component';
+import { NavBarComponent } from './nav-bar.component';
+import { SharedModule } from './shared/shared.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './auth/auth.module';
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from './store/reducers/app.reducers';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavBarComponent,
+    FileUploadComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    HttpClientModule,
+    FormsModule,
+    SharedModule,
+    AuthModule,
+    StoreModule.forRoot(appReducers),
     AppRoutingModule
   ],
-  providers: [],
+  providers: [JQUERY_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
