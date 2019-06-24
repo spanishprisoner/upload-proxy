@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using UploadProxy.Core.Infrastructure;
 
-namespace UploadProxy.Front.Services.Implementation
+namespace UploadProxy.Core.Services.Implementation
 {
 	public class HttpClientService : IHttpClientService
 	{

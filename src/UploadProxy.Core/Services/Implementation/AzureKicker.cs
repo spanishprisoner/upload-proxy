@@ -8,16 +8,16 @@ namespace UploadProxy.Core.Services.Implementation
 {
 	public class AzureKicker : IAzureKicker
 	{
-		private readonly IWebClientService _webClientService;
+		private readonly IHttpClientService _httpClientService;
 		private readonly IConfiguration _configuration;
 		private readonly ILogger<AzureKicker> _logger;
 		private const double Period = 5;
 		private CancellationTokenSource _cancellationTokenSource;
 
-		public AzureKicker(IWebClientService webClientService, IConfiguration configuration,
+		public AzureKicker(IHttpClientService httpClientService, IConfiguration configuration,
 			ILogger<AzureKicker> logger)
 		{
-			_webClientService = webClientService;
+			_httpClientService = httpClientService;
 			_configuration = configuration;
 			_logger = logger;
 		}
@@ -54,7 +54,7 @@ namespace UploadProxy.Core.Services.Implementation
 			try
 			{
 				var link = $"https://{_configuration["Domain"]}";
-				await _webClientService.Get(link);
+				await _httpClientService.Get(link);
 				_logger.LogDebug("Kicked");
 			}
 			catch (Exception e)
