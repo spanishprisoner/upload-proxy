@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using UploadProxy.Core.Services;
 using UploadProxy.Front.Controllers.Models;
-using UploadProxy.Front.Services;
 
 namespace UploadProxy.Front.Controllers
 {

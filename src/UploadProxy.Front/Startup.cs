@@ -19,8 +19,6 @@ using UploadProxy.Core.Services;
 using UploadProxy.Core.Services.Implementation;
 using UploadProxy.Data.Identity;
 using UploadProxy.Data.Identity.Models;
-using UploadProxy.Front.Services;
-using UploadProxy.Front.Services.Implementation;
 
 namespace UploadProxy.Front
 {
@@ -39,7 +37,6 @@ namespace UploadProxy.Front
 		{
 			services.AddSingleton<IHttpClientService, HttpClientService>();
 			services.AddSingleton<IAzureKicker, AzureKicker>();
-			services.AddSingleton<IWebClientService, WebClientService>();
 			services.AddTransient<IEmailSender, EmailSender>();
 
 			services.AddDbContext<UsersDbContext>();

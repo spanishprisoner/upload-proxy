@@ -1,12 +1,13 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace UploadProxy.Front.Infrastructure
+namespace UploadProxy.Core.Infrastructure
 {
 	public class RetryHandler : DelegatingHandler
 	{
-		private const int MaxRetries = 1;
+		private const int MaxRetries = 2;
 
 		public RetryHandler(HttpMessageHandler innerHandler)
 			: base(innerHandler)
@@ -23,6 +24,8 @@ namespace UploadProxy.Front.Infrastructure
 				{
 					return response;
 				}
+
+				await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
 			}
 
 			return response;

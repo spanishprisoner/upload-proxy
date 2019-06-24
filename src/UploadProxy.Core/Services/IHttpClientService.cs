@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace UploadProxy.Front.Services
+namespace UploadProxy.Core.Services
 {
 	public interface IHttpClientService
 	{
