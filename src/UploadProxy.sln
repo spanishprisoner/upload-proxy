@@ -1,9 +1,8 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UploadProxy.Front", "UploadProxy\UploadProxy.Front.csproj", "{4A1879A6-DBB8-4548-9087-FCCD58FDED15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UploadProxy.Front", "UploadProxy.Front\UploadProxy.Front.csproj", "{4A1879A6-DBB8-4548-9087-FCCD58FDED15}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10 Presentation", "10 Presentation", "{1C476EC7-8CD1-4535-9D1D-36BA4511FC20}"
 EndProject
