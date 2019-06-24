@@ -8,6 +8,7 @@ Settings needed for development, mirrored in secrets.json
   "ConnectionStrings":{
     "UsersDbContext":""
   },
+  "SendGridApiKey":"",
   "ClientSecret":"",
   "Authority":"",
   "Domain":"",
