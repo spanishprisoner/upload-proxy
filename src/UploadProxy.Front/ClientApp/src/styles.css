@@ -1,7 +1,7 @@
 body {
 	padding-top: 50px;
 	padding-bottom: 20px;
-	color: #f1f1f1 !important;
+	color: #141414 !important;
 	background-image: url("assets/footer_lodyas_dark.png");
 	background-color: #111 !important;
 }
@@ -11,12 +11,12 @@ body {
 	padding-right: 15px;
 }
 
-.btn {
+/* .btn {
 	padding: 10px 20px;
 	background-color: #333;
 	color: #f1f1f1;
 	transition: .2s;
-}
+} */
 
 .btn-red {
 	background-color: #d43f3a;
