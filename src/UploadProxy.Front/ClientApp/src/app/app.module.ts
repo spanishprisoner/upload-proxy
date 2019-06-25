@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { StoreModule } from '@ngrx/store';
 import { appReducers } from './store/reducers/app.reducers';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     FormsModule,
     SharedModule,
     AuthModule,
+    FileUploadModule,
     StoreModule.forRoot(appReducers),
     AppRoutingModule
   ],
