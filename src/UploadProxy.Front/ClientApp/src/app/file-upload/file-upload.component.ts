@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { ErrorType } from '../shared/error-type';
+import { of } from 'rxjs';
 
 @Component({
   templateUrl: './file-upload.component.html',
@@ -9,13 +13,28 @@ export class FileUploadComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({ url: '/' });
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
+  public accessError = 'Checking Access...';
+
+  constructor(private httpClient: HttpClient) {
+  }
 
   ngOnInit(): void {
     this.uploader.onCompleteItem = (item: FileItem, response: string,
       status: Number, headers: ParsedResponseHeaders) => {
-        item.file.name = '<a href="url">link text</a>';
-        console.log('debug');
-      };
+      item.file.name = '<a href="url">link text</a>';
+      console.log('debug');
+    };
+
+    this.httpClient.get<void | ErrorType>('/api/auth/checkaccess')
+      .pipe(
+        catchError(e => of({ error: 'You do not have access to this resource' } as ErrorType))
+      ).subscribe(e => {
+        if (e && (e as ErrorType).error != null) {
+          this.accessError = (e as ErrorType).error;
+        } else {
+          this.accessError = '';
+        }
+      });
   }
 
   public fileOverBase(e: any): void {

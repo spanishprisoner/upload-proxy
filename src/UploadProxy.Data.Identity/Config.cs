@@ -17,7 +17,7 @@ namespace UploadProxy.Data.Identity
 		{
 			return new List<ApiResource>
 			{
-				new ApiResource("uploadproxyapi", "Upload Proxy API", new List<string> { "UploadProxyApiAccess" })
+				new ApiResource("uploadproxyapi", "Upload Proxy API", new List<string> { "upload_proxy_api_access" })
 			};
 		}
 
