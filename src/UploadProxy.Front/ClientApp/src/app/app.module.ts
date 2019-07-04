@@ -13,12 +13,16 @@ import { StoreModule } from '@ngrx/store';
 import { appReducers } from './store/reducers/app.reducers';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { UploadedFilenamePipe } from './file-upload/uploaded-filename.pipe';
+import { UploadedLinkPipe } from './file-upload/uploaded-link.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    UploadedFilenamePipe,
+    UploadedLinkPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
