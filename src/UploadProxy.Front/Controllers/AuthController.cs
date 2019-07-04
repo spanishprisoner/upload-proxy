@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -38,7 +39,7 @@ namespace UploadProxy.Front.Controllers
 			//_userManager.PasswordValidators.Clear();
 			//var user = new IdentityUser { UserName = "username" };
 			//var result = await _userManager.CreateAsync(user, "password");
-			//await _userManager.AddClaimAsync(user, new Claim("UploadProxyApiAccess", "true"));
+			//await _userManager.AddClaimAsync(user, new Claim("upload_proxy_api_access", "true"));
 
 			if (model.Password != model.Password2)
 			{
@@ -47,7 +48,7 @@ namespace UploadProxy.Front.Controllers
 
 			var user = new IdentityUser { UserName = model.Email, Email = model.Email };
 			var result = await _userManager.CreateAsync(user, model.Password);
-			await _userManager.AddClaimAsync(user, new Claim("UploadProxyApiAccess", "true"));
+			await _userManager.AddClaimAsync(user, new Claim("upload_proxy_api_access", "true"));
 			if (result.Succeeded)
 			{
 				var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -187,6 +188,13 @@ namespace UploadProxy.Front.Controllers
 			}
 
 			return Ok(new ErrorResponse { Error = "Password reset error" });
+		}
+
+		[Authorize(Policy = "UploadProxyApiAccess")]
+		[HttpGet("checkaccess")]
+		public async Task<IActionResult> CheckAccess()
+		{
+			return Ok();
 		}
 	}
 }

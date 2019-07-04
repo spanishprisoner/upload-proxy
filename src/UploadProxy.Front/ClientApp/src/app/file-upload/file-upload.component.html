@@ -1,4 +1,4 @@
-<div class="container main-container well">
+<div *ngIf="accessError === ''" class="container main-container well">
   <div class="row">
     <div class="col-md-3">
       <h3>Drag and drop</h3>
@@ -76,4 +76,7 @@
       </div>
     </div>
   </div>
+</div>
+<div class="row text-center text-danger" style="margin-top: 10px;" *ngIf="accessError !== ''">
+  {{accessError}}
 </div>

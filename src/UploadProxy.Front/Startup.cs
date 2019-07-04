@@ -86,7 +86,7 @@ namespace UploadProxy.Front
 
 			services.AddAuthorization(options =>
 			{
-				options.AddPolicy("UploadProxyApiAccess", policy => policy.RequireClaim("UploadProxyApiAccess", "true"));
+				options.AddPolicy("UploadProxyApiAccess", policy => policy.RequireClaim("upload_proxy_api_access", "true"));
 			});
 
 			services.AddSpaStaticFiles(configuration =>
