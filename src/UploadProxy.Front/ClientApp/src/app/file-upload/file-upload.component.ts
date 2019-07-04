@@ -21,8 +21,7 @@ export class FileUploadComponent implements OnInit {
   ngOnInit(): void {
     this.uploader.onCompleteItem = (item: FileItem, response: string,
       status: Number, headers: ParsedResponseHeaders) => {
-      item.file.name = '<a href="url">link text</a>';
-      console.log('debug');
+      item.file.name += '`https://example.com/link_to_file';
     };
 
     this.httpClient.get<void | ErrorType>('/api/auth/checkaccess')
