@@ -1,4 +1,4 @@
-#define HTTPS
+﻿#define HTTPS
 
 using System;
 using IdentityServer4.EntityFramework.Stores;
@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +37,7 @@ namespace UploadProxy.Front
 			services.AddSingleton<IHttpClientService, HttpClientService>();
 			services.AddSingleton<IAzureKicker, AzureKicker>();
 			services.AddTransient<IEmailSender, EmailSender>();
+			services.AddTransient<IFileUploader, FtpFileUploader>();
 
 			services.AddDbContext<UsersDbContext>();
 			services.AddIdentity<IdentityUser, IdentityRole>()
@@ -58,7 +58,7 @@ namespace UploadProxy.Front
 			services.AddTransient<IProfileService, IdentityClaimsProfileService>();
 			services.AddTransient<IPersistedGrantStore, PersistedGrantStore>();
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddMvc();
 
 			services.AddAuthentication(options =>
 			{

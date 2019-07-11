@@ -12,7 +12,11 @@ Settings needed for development, mirrored in secrets.json
   "ClientSecret":"",
   "Authority":"",
   "Domain":"",
-  "IdentityJwk":""
+  "IdentityJwk":"",
+  "FtpPath": "",
+  "FtpUsername": "",
+  "FtpPassword": "",
+  "HttpPath": ""
 }
 ```
 
