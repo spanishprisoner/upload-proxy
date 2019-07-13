@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class FileUploadComponent implements OnInit {
   public hasAnotherDropZoneOver = false;
   public accessError = null;
 
-  constructor(private httpClient: HttpClient, private authService: AuthService) {
+  constructor(private httpClient: HttpClient, private authService: AuthService, private changeDetector: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -29,6 +29,7 @@ export class FileUploadComponent implements OnInit {
       status: Number, headers: ParsedResponseHeaders) => {
       item.file.name += '`' + response;
     };
+    this.uploader.onProgressItem = (progress: any) => this.changeDetector.detectChanges();
 
     this.httpClient.get<void | ErrorType>('/api/auth/checkaccess')
       .pipe(
