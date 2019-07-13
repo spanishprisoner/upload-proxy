@@ -27,7 +27,9 @@ export class FileUploadComponent implements OnInit {
     });
     this.uploader.onCompleteItem = (item: FileItem, response: string,
       status: Number, headers: ParsedResponseHeaders) => {
-      item.file.name += '`' + response;
+      if (response && response.length > 0) {
+        item.file.name += '`' + response;
+      }
     };
     this.uploader.onProgressItem = (progress: any) => this.changeDetector.detectChanges();
 
