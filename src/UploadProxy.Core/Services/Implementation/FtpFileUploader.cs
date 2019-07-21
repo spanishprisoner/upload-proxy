@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -27,13 +29,14 @@ namespace UploadProxy.Core.Services.Implementation
 				var password = _configuration["FtpPassword"];
 				var httpPath = _configuration["HttpPath"];
 
-				filename = $"{Guid.NewGuid()}-{filename}";
-				ftpPath = ftpPath.EndsWith('/')
-					? $"{ftpPath}{filename}"
-					: $"{ftpPath}/{filename}";
+				var credentials = new NetworkCredential(username.Normalize(), password.Normalize());
+				var directory = await CreateDirectory(ftpPath, credentials);
+				var filePath = ftpPath.EndsWith('/')
+					? $"{ftpPath}{directory}/{filename}"
+					: $"{ftpPath}/{directory}/{filename}";
 
-				var request = (FtpWebRequest)WebRequest.Create(ftpPath);
-				request.Credentials = new NetworkCredential(username.Normalize(), password.Normalize());
+				var request = (FtpWebRequest)WebRequest.Create(filePath);
+				request.Credentials = credentials;
 				request.Method = WebRequestMethods.Ftp.UploadFile;
 				request.EnableSsl = true;
 				request.UsePassive = true;
@@ -47,10 +50,10 @@ namespace UploadProxy.Core.Services.Implementation
 				}
 
 				httpPath = httpPath.EndsWith('/')
-					? $"{httpPath}{filename}"
-					: $"{httpPath}/{filename}";
+					? $"{httpPath}{directory}/{filename}"
+					: $"{httpPath}/{directory}/{filename}";
 
-				_logger.LogInformation($"Uploaded file: '{ftpPath}' ('{httpPath}')");
+				_logger.LogInformation($"Uploaded file: '{filePath}' ('{httpPath}')");
 				return httpPath;
 			}
 			catch (Exception e)
@@ -58,6 +61,36 @@ namespace UploadProxy.Core.Services.Implementation
 				_logger.LogError(e.Message);
 				return string.Empty;
 			}
+		}
+
+		private async Task<string> CreateDirectory(string ftpPath, ICredentials credentials)
+		{
+			for (var i = 0; i < 10; i++)
+			{
+				try
+				{
+					var directory = string.Join("",
+						Guid.NewGuid().ToByteArray().Take(8).Select(e => $"{e:X2}"));
+					var directoryPath = ftpPath.EndsWith('/')
+						? $"{ftpPath}{directory}"
+						: $"{ftpPath}/{directory}";
+					var request = (FtpWebRequest)WebRequest.Create(directoryPath);
+					request.Credentials = credentials;
+					request.Method = WebRequestMethods.Ftp.MakeDirectory;
+					request.EnableSsl = true;
+					request.UsePassive = true;
+					await request.GetResponseAsync();
+
+					return directory;
+				}
+				catch (Exception e)
+				{
+					_logger.LogError(e.Message);
+				}
+			}
+
+			_logger.LogError("Cannot create ftp folder");
+			throw new ArgumentException("Cannot create ftp folder");
 		}
 	}
 }
