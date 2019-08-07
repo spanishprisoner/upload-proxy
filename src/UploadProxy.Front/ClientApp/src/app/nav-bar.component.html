@@ -10,7 +10,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="loggedIn == false"><a routerLink="/auth/register">Register</a></li>
+        <!-- <li *ngIf="loggedIn == false"><a routerLink="/auth/register">Register</a></li> -->
         <li *ngIf="loggedIn == false"><a routerLink="/auth/login">Log in</a></li>
         <li *ngIf="loggedIn"><a (click)="logOut()" href="javascript:void(0);">Log out</a></li>
       </ul>

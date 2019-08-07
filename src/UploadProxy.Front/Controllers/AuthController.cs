@@ -32,39 +32,39 @@ namespace UploadProxy.Front.Controllers
 			_emailSender = emailSender;
 		}
 
-		[HttpPost("register")]
-		public async Task<IActionResult> Register([FromBody] RegisterModel model)
-		{
-			//Dummy user
-			//_userManager.PasswordValidators.Clear();
-			//var user = new IdentityUser { UserName = "username" };
-			//var result = await _userManager.CreateAsync(user, "password");
-			//await _userManager.AddClaimAsync(user, new Claim("upload_proxy_api_access", "true"));
+		//[HttpPost("register")]
+		//public async Task<IActionResult> Register([FromBody] RegisterModel model)
+		//{
+		//	//Dummy user
+		//	//_userManager.PasswordValidators.Clear();
+		//	//var user = new IdentityUser { UserName = "username" };
+		//	//var result = await _userManager.CreateAsync(user, "password");
+		//	//await _userManager.AddClaimAsync(user, new Claim("upload_proxy_api_access", "true"));
 
-			if (model.Password != model.Password2)
-			{
-				return Ok(new ErrorResponse { Error = "Passwords don't match" });
-			}
+		//	if (model.Password != model.Password2)
+		//	{
+		//		return Ok(new ErrorResponse { Error = "Passwords don't match" });
+		//	}
 
-			var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-			var result = await _userManager.CreateAsync(user, model.Password);
-			await _userManager.AddClaimAsync(user, new Claim("upload_proxy_api_access", "true"));
-			if (result.Succeeded)
-			{
-				var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-				var callbackUrl = $"https://{_configuration["Domain"]}/auth/emailconfirmation?userId={user.Id}&code={code}";
-				await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+		//	var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+		//	var result = await _userManager.CreateAsync(user, model.Password);
+		//	await _userManager.AddClaimAsync(user, new Claim("upload_proxy_api_access", "true"));
+		//	if (result.Succeeded)
+		//	{
+		//		var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+		//		var callbackUrl = $"https://{_configuration["Domain"]}/auth/emailconfirmation?userId={user.Id}&code={code}";
+		//		await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-				await _signInManager.SignInAsync(user, false);
+		//		await _signInManager.SignInAsync(user, false);
 
-				return Ok();
-			}
+		//		return Ok();
+		//	}
 
-			return BadRequest(new ErrorResponse
-			{
-				Error = string.Join(", ", result.Errors.Select(e => e.Description))
-			});
-		}
+		//	return BadRequest(new ErrorResponse
+		//	{
+		//		Error = string.Join(", ", result.Errors.Select(e => e.Description))
+		//	});
+		//}
 
 		[HttpPost("login")]
 		public async Task<IActionResult> LogIn([FromBody] LoginModel model)

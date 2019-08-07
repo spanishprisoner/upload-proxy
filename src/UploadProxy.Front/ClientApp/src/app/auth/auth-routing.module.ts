@@ -7,7 +7,7 @@ import { RegisterComponent } from './register.component';
 import { ResetPasswordComponent } from './reset-password.component';
 
 const routes: Routes = [
-  { path: 'auth/register', component: RegisterComponent },
+  // { path: 'auth/register', component: RegisterComponent },
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/emailconfirmation', component: EmailConfirmationComponent },
   { path: 'auth/forgotpassword', component: ForgotPasswordComponent },
