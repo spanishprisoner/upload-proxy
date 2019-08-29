@@ -22,7 +22,7 @@ export class FileUploadComponent implements OnInit {
   ngOnInit(): void {
     this.uploader.setOptions({
       headers: [
-        { name: 'Authorization', value: 'Bearer ' + this.authService.getToken() }
+        { name: 'Authorization', value: 'Bearer ' + this.authService.accessToken }
       ]
     });
     this.uploader.onCompleteItem = (item: FileItem, response: string,
