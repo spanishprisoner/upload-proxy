@@ -7,6 +7,7 @@ using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +58,13 @@ namespace UploadProxy.Front
 				.AddAspNetIdentity<IdentityUser>();
 			services.AddTransient<IProfileService, IdentityClaimsProfileService>();
 			services.AddTransient<IPersistedGrantStore, PersistedGrantStore>();
+
+			services.Configure<FormOptions>(e =>
+			{
+				e.ValueLengthLimit = int.MaxValue;
+				e.MultipartBodyLengthLimit = int.MaxValue;
+				e.MultipartHeadersLengthLimit = int.MaxValue;
+			});
 
 			services.AddMvc();
 
