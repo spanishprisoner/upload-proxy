@@ -9,6 +9,7 @@ namespace UploadProxy.Front.Controllers
 {
 	[Route("api/upload")]
 	[Authorize]
+	[DisableRequestSizeLimit]
 	public class UploadController : Controller
 	{
 		private readonly IFileUploader _fileUploader;
