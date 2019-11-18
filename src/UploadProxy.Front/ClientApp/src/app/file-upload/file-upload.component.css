@@ -1,0 +1,13 @@
+.main-container {
+    background-color: white;
+    color: #141414;
+    margin-top: 30px;
+}
+
+.my-drop-zone {
+    border: dotted 2px gray;
+}
+
+.nv-file-over {
+    border: dotted 2px lightgreen;
+}
